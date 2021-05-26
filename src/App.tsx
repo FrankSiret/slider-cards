@@ -43,14 +43,14 @@ const App = () => {
 
         <SliderCard
           width="80%"
+          height="600px"
           margin="auto"
-          pad="medium"
           background="dark-1"
           stepWidth={100}
           title="Recently viewed"
         >
           {cards && cards.map((item, index) => (
-            <ItemCard {...item} />
+            <ItemCard key={index} {...item} />
           ))}
         </SliderCard>
 
