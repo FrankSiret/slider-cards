@@ -68,8 +68,8 @@ const SliderCard: (props: ISliderCardProps) => JSX.Element = (props) => {
             const scrollLeft = elem.scrollLeft;
             const left = scrollWidth - scrollLeft;
 
-            setIsScrollLeft(scrollLeft > 0);
-            setIsScrollRight(clientWidth - left < 0);
+            setIsScrollLeft(scrollLeft > 1);
+            setIsScrollRight(left - clientWidth > 1);
         }
     }, [ref])
 
@@ -96,16 +96,12 @@ const SliderCard: (props: ISliderCardProps) => JSX.Element = (props) => {
 
     const previousRepeat = () => {
         previousClick()
-        interval = setInterval(() => {
-            previousClick()
-        }, 100);
+        interval = setInterval(previousClick, 200);
     }
 
     const nextRepeat = () => {
         nextClick()
-        interval = setInterval(() => {
-            nextClick()
-        }, 100);
+        interval = setInterval(nextClick, 200);
     }
 
     return (
