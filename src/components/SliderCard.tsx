@@ -40,6 +40,14 @@ const StyledButton = styled(Button)`
     }
 `
 
+const SliderStyled = styled(Box)`
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+    &::-webkit-scrollbar {
+        display: none;
+    }
+`
+
 const SliderCard: (props: ISliderCardProps) => JSX.Element = (props) => {
 
     const { stepWidth, title, previous = <Previous />, next = <Next />, children, ...rest } = props;
@@ -136,7 +144,7 @@ const SliderCard: (props: ISliderCardProps) => JSX.Element = (props) => {
                     </StyledButton>
                 </ControlsBox>
             </Box>
-            <Box
+            <SliderStyled
                 ref={ref}
                 onScroll={() => onScroll()}
                 direction="row"
@@ -144,10 +152,10 @@ const SliderCard: (props: ISliderCardProps) => JSX.Element = (props) => {
                 flex
                 gap="1rem"
                 margin={{ top: "small" }}
-                overflow={{ "vertical": "hidden", "horizontal": "hidden" }}
+                overflow={{ "vertical": "hidden" }}
             >
                 {children}
-            </Box>
+            </SliderStyled>
         </Box >
     )
 }
