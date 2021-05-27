@@ -40,8 +40,6 @@ const StyledButton = styled(Button)`
     }
 `
 
-let interval: NodeJS.Timeout;
-
 const SliderCard: (props: ISliderCardProps) => JSX.Element = (props) => {
 
     const { stepWidth, title, previous = <Previous />, next = <Next />, children, ...rest } = props;
@@ -49,9 +47,11 @@ const SliderCard: (props: ISliderCardProps) => JSX.Element = (props) => {
     const [isScrollLeft, setIsScrollLeft] = useState(false)
     const [isScrollRight, setIsScrollRight] = useState(false)
 
+    const interval = useRef<NodeJS.Timeout>();
+
     useEffect(() => {
-        if (interval && (!isScrollLeft || !isScrollRight))
-            clearInterval(interval)
+        if (interval.current && (!isScrollLeft || !isScrollRight))
+            clearInterval(interval.current)
     }, [isScrollLeft, isScrollRight])
 
     const onResize = useCallback(() => {
@@ -91,17 +91,19 @@ const SliderCard: (props: ISliderCardProps) => JSX.Element = (props) => {
     }
 
     const stopRepeat = () => {
-        clearInterval(interval);
+        interval.current && clearInterval(interval.current);
     }
 
     const previousRepeat = () => {
+        stopRepeat()
         previousClick()
-        interval = setInterval(previousClick, 200);
+        interval.current = setInterval(previousClick, 200);
     }
 
     const nextRepeat = () => {
+        stopRepeat()
         nextClick()
-        interval = setInterval(nextClick, 200);
+        interval.current = setInterval(nextClick, 200);
     }
 
     return (
